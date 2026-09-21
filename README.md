@@ -113,3 +113,14 @@ Files in the approved proposal:
 - game.js
 
 Bumblebee has not run automated tests or verified runtime behavior for this change.
+
+
+<!-- bumblebee-pr-9 -->
+### Merged change: Document Bubble Blast setup, controls, and manual validation
+
+Merged pull request #9: https://github.com/MarcoLFrancisco/Bubble-Blaster/pull/9
+
+Files in the approved proposal:
+- README.md
+
+Bumblebee has not run automated tests or verified runtime behavior for this change.
