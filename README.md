@@ -127,3 +127,16 @@ Files in the approved proposal:
 - README.md
 
 Bumblebee has not run automated tests or verified runtime behavior for this change.
+
+
+<!-- bumblebee-pr-11 -->
+### Merged change: Add a boy in a cap, T-shirt and jeans with a Microsoft-inspired backdrop
+
+Merged pull request #11: https://github.com/MarcoLFrancisco/Bubble-Blaster/pull/11
+
+Files in the approved proposal:
+- game.js
+- styles.css
+- README.md
+
+Bumblebee has not run automated tests or verified runtime behavior for this change.
