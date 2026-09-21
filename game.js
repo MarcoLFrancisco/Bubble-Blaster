@@ -115,21 +115,116 @@
       else if (!time) finish("Time expired. Restart to try again.");
     }
   }
-  function draw() {
-    ctx.fillStyle = "#080f20"; ctx.fillRect(0, 0, W, H);
-    ctx.strokeStyle = "#1b2946"; ctx.lineWidth = 1;
-    for (let i = 0; i < W; i += 60) {
-      ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, floor); ctx.stroke();
+  function drawBackground() {
+    ctx.save();
+    const sky = ctx.createLinearGradient(0, 0, W, floor);
+    sky.addColorStop(0, "#08233e");
+    sky.addColorStop(0.55, "#103f68");
+    sky.addColorStop(1, "#07182d");
+    ctx.fillStyle = sky;
+    ctx.fillRect(0, 0, W, H);
+
+    // Subdued Microsoft-inspired tiles stay behind the moving targets.
+    const colors = ["#f25022", "#7fba00", "#00a4ef", "#ffb900"];
+    const tile = 78, gap = 8, left = W / 2 - tile - gap / 2;
+    ctx.globalAlpha = 0.24;
+    colors.forEach((color, i) => {
+      ctx.fillStyle = color;
+      ctx.fillRect(left + (i % 2) * (tile + gap), 80 + Math.floor(i / 2) * (tile + gap), tile, tile);
+    });
+    ctx.globalAlpha = 1;
+
+    // Perspective lines suggest a blue desktop stage without adding obstacles.
+    const horizon = floor - 110;
+    ctx.strokeStyle = "#ffffff12";
+    ctx.lineWidth = 1;
+    for (let i = -W; i <= W * 2; i += 120) {
+      ctx.beginPath();
+      ctx.moveTo(W / 2 + (i - W / 2) * 0.2, horizon);
+      ctx.lineTo(i, floor);
+      ctx.stroke();
     }
-    ctx.fillStyle = "#314963"; ctx.fillRect(0, floor, W, H - floor);
+    for (const offset of [0, 18, 44, 78]) {
+      ctx.beginPath();
+      ctx.moveTo(0, horizon + offset);
+      ctx.lineTo(W, horizon + offset);
+      ctx.stroke();
+    }
+    ctx.fillStyle = "#10283f";
+    ctx.fillRect(0, floor, W, H - floor);
+    colors.forEach((color, i) => {
+      ctx.fillStyle = color;
+      ctx.fillRect(i * W / 4, floor, W / 4, 3);
+    });
+    ctx.restore();
+  }
+  function drawPlayer() {
+    ctx.save();
+    ctx.translate(x, floor);
+    // Keep the artwork within the existing 28-by-38 collision rectangle.
+    // Fade the whole outfit during protection, preserving its colors.
+    ctx.globalAlpha = shield && Math.floor(shield * 12) % 2 ? 0.45 : 1;
+
+    // Jeans, two trouser legs, seams, and white-soled sneakers.
+    ctx.fillStyle = "#245caa";
+    ctx.fillRect(-8, -14, 16, 5);
+    ctx.fillRect(-8, -9, 7, 7);
+    ctx.fillRect(1, -9, 7, 7);
+    ctx.fillStyle = "#79afe6";
+    ctx.fillRect(-6, -11, 2, 7);
+    ctx.fillRect(3, -11, 2, 7);
+    ctx.fillStyle = "#13243a";
+    ctx.fillRect(-10, -4, 9, 3);
+    ctx.fillRect(1, -4, 10, 3);
+    ctx.fillStyle = "#eef5ff";
+    ctx.fillRect(-10, -1, 9, 1);
+    ctx.fillRect(1, -1, 10, 1);
+
+    // Short-sleeved green T-shirt and bare forearms.
+    ctx.fillStyle = "#86c928";
+    ctx.fillRect(-8, -23, 16, 10);
+    ctx.fillRect(-12, -22, 4, 6);
+    ctx.fillRect(8, -22, 4, 6);
+    ctx.fillStyle = "#f0b78d";
+    ctx.fillRect(-12, -16, 4, 5);
+    ctx.fillRect(8, -16, 4, 5);
+    ctx.fillRect(-3, -25, 6, 4);
+    ctx.fillStyle = "#d9f5ad";
+    ctx.fillRect(-5, -20, 2, 5);
+
+    // Face, ears, hair, eyes, and a small smile.
+    ctx.fillStyle = "#f0b78d";
+    ctx.fillRect(-7, -32, 14, 9);
+    ctx.fillRect(-9, -30, 2, 4);
+    ctx.fillRect(7, -30, 2, 4);
+    ctx.fillStyle = "#482b23";
+    ctx.fillRect(-7, -33, 14, 2);
+    ctx.fillRect(-7, -31, 2, 3);
+    ctx.fillRect(5, -31, 2, 3);
+    ctx.fillStyle = "#182338";
+    ctx.fillRect(-4, -29, 2, 2);
+    ctx.fillRect(3, -29, 2, 2);
+    ctx.fillStyle = "#a85b48";
+    ctx.fillRect(-1, -25, 3, 1);
+
+    // Red baseball cap with a right-facing brim and highlight.
+    ctx.fillStyle = "#f25022";
+    ctx.fillRect(-6, -38, 12, 2);
+    ctx.fillRect(-8, -36, 16, 4);
+    ctx.fillStyle = "#c83419";
+    ctx.fillRect(-8, -33, 22, 2);
+    ctx.fillStyle = "#ffad84";
+    ctx.fillRect(-4, -37, 3, 3);
+    ctx.restore();
+  }
+  function draw() {
+    drawBackground();
     ctx.strokeStyle = "#79f1df"; ctx.lineWidth = 4;
     for (const s of shots) {
       ctx.beginPath(); ctx.moveTo(s.x, floor - 38); ctx.lineTo(s.x, s.y); ctx.stroke();
     }
     for (const b of targets) BubbleBlastIcons.draw(ctx, b.x, b.y, b.r);
-    ctx.fillStyle = shield && Math.floor(shield * 12) % 2 ? "#617990" : "#79f1df";
-    ctx.fillRect(x - 14, floor - 38, 28, 38);
-    ctx.fillStyle = "#101b35"; ctx.fillRect(x - 9, floor - 31, 18, 9);
+    drawPlayer();
     if (!playing) {
       ctx.fillStyle = "#080f20cc"; ctx.fillRect(0, 180, W, 150);
       ctx.fillStyle = "#eef3ff"; ctx.textAlign = "center"; ctx.font = "bold 26px system-ui";
