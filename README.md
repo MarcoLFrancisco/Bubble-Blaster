@@ -2,7 +2,9 @@
 
 A single-level, Super Pang-inspired browser arcade game. Move beneath bouncing AI icons and fire vertical energy harpoons. Large targets split into medium targets, medium targets split into small targets, and small targets disappear when hit. Clear the arena before your lives or timer run out.
 
-The game uses original, procedurally drawn Copilot-inspired artwork, not official logos. It is not affiliated with Microsoft or the creators of Super Pang. The repository is named `Bubble-Blaster`; the game's display name is **Bubble Blast**.
+Play as a pixel-art boy wearing a red baseball cap, green T-shirt, blue jeans, and sneakers. The Microsoft-inspired setting combines a blue perspective stage, a subdued red/green/blue/yellow four-tile motif, and matching page-background accents. All artwork is drawn locally with Canvas or CSS; no image downloads are required.
+
+The AI targets use original, procedurally drawn Copilot-inspired artwork, not official logos. This game is not affiliated with or endorsed by Microsoft or the creators of Super Pang. The repository is named `Bubble-Blaster`; the game's display name is **Bubble Blast**. The character and background changes are visual only: movement, collision bounds, firing, and scoring remain unchanged.
 
 ## Prerequisites
 
@@ -31,7 +33,7 @@ This launch procedure follows the source's relative stylesheet and deferred clas
 
 Each round starts with two large targets, three lives, 90 seconds, zero points, and two seconds of damage protection. Hits award 100 points for a large target, 200 for a medium target, and 300 for a small target. The harpoon rises vertically, with at most two shots active and a short firing cooldown.
 
-Touching a target costs one life when protection is inactive. Damage grants another two seconds of protection, indicated by the player's flashing color. Clear all targets to win; reaching zero lives or time ends the round. The status below the arena reports the outcome.
+Touching a target costs one life when protection is inactive. Damage grants another two seconds of protection, indicated by the whole character flashing between full and reduced opacity. Clear all targets to win; reaching zero lives or time ends the round. The status below the arena reports the outcome.
 
 Held inputs clear when the browser window loses focus. Simulation does not advance while the document is hidden; returning to the tab requires pressing the controls again. The timer follows simulation time, which is capped per frame, rather than guaranteeing wall-clock timing under heavy browser load.
 
@@ -56,6 +58,7 @@ Perform these manual checks in a browser after opening the folder in VS Code. No
 | Check | Action and expected result |
 | --- | --- |
 | Startup | Open `index.html` and browser developer tools. Expect styled content, a ready message, enabled controls, and no missing local assets or JavaScript errors. |
+| Character and theme | Expect a boy with a red cap, green T-shirt, blue jeans, and sneakers against a blue Microsoft-inspired stage with four colored tiles. Check both narrow and wide windows for outfit readability and target contrast. Move to both arena edges: the boy should stay inside the arena with his shoes on the floor. During damage protection, the whole outfit should flash without disappearing completely. |
 | Round reset | Start, then restart after moving and scoring. Expect two large targets, centered player, score 0, lives 3, and a timer starting at 90. |
 | Keyboard | With the canvas focused, test arrows, A/D, and Space. Expect bounded horizontal movement and vertical harpoons; holding Fire should repeat without exceeding two active shots. |
 | Splitting and score | Hit each target size. Expect large to split into two medium targets (+100), medium into two small targets (+200), and small to disappear (+300). |
