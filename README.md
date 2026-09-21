@@ -31,3 +31,14 @@ Files in the approved proposal:
 - icons.js
 
 Bumblebee has not run automated tests or verified runtime behavior for this change.
+
+
+<!-- bumblebee-pr-7 -->
+### Merged change: Implement Bubble Blast single-level gameplay
+
+Merged pull request #7: https://github.com/MarcoLFrancisco/Bubble-Blaster/pull/7
+
+Files in the approved proposal:
+- game.js
+
+Bumblebee has not run automated tests or verified runtime behavior for this change.
